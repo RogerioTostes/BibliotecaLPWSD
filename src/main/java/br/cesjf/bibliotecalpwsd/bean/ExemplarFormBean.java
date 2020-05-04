@@ -8,6 +8,7 @@ package br.cesjf.bibliotecalpwsd.bean;
 import br.cesjf.bibliotecalpwsd.dao.ExemplarDAO;
 import br.cesjf.bibliotecalpwsd.dao.LivroDAO;
 import br.cesjf.bibliotecalpwsd.model.Exemplar;
+import br.cesjf.bibliotecalpwsd.util.Mensagem;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
@@ -49,11 +50,11 @@ public class ExemplarFormBean implements Serializable {
 
     //Métodos dos botões 
     public void record(ActionEvent actionEvent) {
-        msgScreen(new ExemplarDAO().persistir(exemplar));
+        Mensagem.msgScreen(new ExemplarDAO().persistir(exemplar));
     }
     
     public void exclude(ActionEvent actionEvent) {
-        msgScreen(new ExemplarDAO().remover(exemplar));
+        Mensagem.msgScreen(new ExemplarDAO().remover(exemplar));
     }
 
     //getters and setters
@@ -90,12 +91,6 @@ public class ExemplarFormBean implements Serializable {
         return exemplar == null || exemplar.getId() == null || exemplar.getId() == 0;
     }
     
-    public void msgScreen(String msg) {
-        if(msg.contains("Não")){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", msg));
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informação", msg));
-        }
-    }
+  
 
 }

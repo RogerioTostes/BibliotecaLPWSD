@@ -11,6 +11,7 @@ import br.cesjf.bibliotecalpwsd.dao.EditoraDAO;
 import br.cesjf.bibliotecalpwsd.dao.LivroDAO;
 import br.cesjf.bibliotecalpwsd.model.Editora;
 import br.cesjf.bibliotecalpwsd.model.Livro;
+import br.cesjf.bibliotecalpwsd.util.Mensagem;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -69,13 +70,13 @@ public class LivroFormBean implements Serializable {
     //Métodos dos botões 
     public void record(ActionEvent actionEvent) {
         upload();
-        msgScreen(new LivroDAO().persistir(livro));
+        Mensagem.msgScreen(new LivroDAO().persistir(livro));
     }
     
     public void exclude(ActionEvent actionEvent) {
        delete(1);
        delete(2);
-       msgScreen(new LivroDAO().remover(livro));
+       Mensagem.msgScreen(new LivroDAO().remover(livro));
     }
 
     //getters and setters
@@ -143,13 +144,6 @@ public class LivroFormBean implements Serializable {
         return livro == null || livro.getId() == null || livro.getId() == 0;
     }
     
-    public void msgScreen(String msg) {
-        if(msg.contains("Não")){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", msg));
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informação", msg));
-        }
-    }
     
     public void upload() {
         
@@ -169,7 +163,7 @@ public class LivroFormBean implements Serializable {
                 OutputStream out = new FileOutputStream(file);
                 out.write(uploadedFile.getContents());
                 out.close();
-                msgScreen("O arquivo " + uploadedFile.getFileName() + " foi salvo!");
+                Mensagem.msgScreen("O arquivo " + uploadedFile.getFileName() + " foi salvo!");
                 if(uploadedFile.getFileName().toUpperCase().contains(".PDF")){
                     livro.setArquivo(name);
                 }else{
@@ -177,7 +171,7 @@ public class LivroFormBean implements Serializable {
                 }
                 uploadedFile = null;
             } catch(IOException e) {
-               msgScreen("Não foi possível salvar o arquivo " + uploadedFile.getFileName() + "!" + e);
+               Mensagem.msgScreen("Não foi possível salvar o arquivo " + uploadedFile.getFileName() + "!" + e);
             }
         }
     }
@@ -193,7 +187,7 @@ public class LivroFormBean implements Serializable {
             file.delete();
         }
         
-        msgScreen("Arquivo apagado com sucesso");
+        Mensagem.msgScreen("Arquivo apagado com sucesso");
         
         if(i == 1) {
             livro.setCapa(null);

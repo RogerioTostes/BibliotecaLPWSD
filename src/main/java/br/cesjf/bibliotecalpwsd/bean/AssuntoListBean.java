@@ -7,6 +7,7 @@ package br.cesjf.bibliotecalpwsd.bean;
 
 import br.cesjf.bibliotecalpwsd.dao.AssuntoDAO;
 import br.cesjf.bibliotecalpwsd.model.Assunto;
+import br.cesjf.bibliotecalpwsd.util.Mensagem;
 import br.cesjf.bibliotecalpwsd.util.ProcessReport;
 import com.github.adminfaces.template.exception.BusinessException;
 import java.io.Serializable;
@@ -40,13 +41,13 @@ public class AssuntoListBean extends ProcessReport implements Serializable {
 
     //Métodos dos botões 
     public void record(ActionEvent actionEvent) {
-        msgScreen(new AssuntoDAO().persistir(assunto));
+        Mensagem.msgScreen(new AssuntoDAO().persistir(assunto));
         assuntos = new AssuntoDAO().buscarTodas();
     }
 
     public void exclude(ActionEvent actionEvent) {
         for (Object a: assuntosSelecionados){
-            msgScreen(new AssuntoDAO().remover((Assunto) a));
+            Mensagem.msgScreen(new AssuntoDAO().remover((Assunto) a));
         }
         assuntos = new AssuntoDAO().buscarTodas();
     }
@@ -103,12 +104,6 @@ public class AssuntoListBean extends ProcessReport implements Serializable {
         this.id = id;
     }
     
-    public void msgScreen(String msg) {
-        if(msg.contains("Não")){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", msg));
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informação", msg));
-        }
-    }
+   
     
 }

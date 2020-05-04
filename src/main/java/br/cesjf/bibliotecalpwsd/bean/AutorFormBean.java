@@ -7,6 +7,7 @@ package br.cesjf.bibliotecalpwsd.bean;
 
 import br.cesjf.bibliotecalpwsd.dao.AutorDAO;
 import br.cesjf.bibliotecalpwsd.model.Autor;
+import br.cesjf.bibliotecalpwsd.util.Mensagem;
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -44,11 +45,11 @@ public class AutorFormBean implements Serializable {
 
     //Métodos dos botões 
     public void record(ActionEvent actionEvent) {
-        msgScreen(new AutorDAO().persistir(autor));
+        Mensagem.msgScreen(new AutorDAO().persistir(autor));
     }
     
     public void exclude(ActionEvent actionEvent) {
-        msgScreen(new AutorDAO().remover(autor));
+        Mensagem.msgScreen(new AutorDAO().remover(autor));
     }
 
     //getters and setters
@@ -76,12 +77,4 @@ public class AutorFormBean implements Serializable {
         return autor == null || autor.getId() == null || autor.getId() == 0;
     }
     
-    public void msgScreen(String msg) {
-        if(msg.contains("Não")){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", msg));
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informação", msg));
-        }
     }
-
-}

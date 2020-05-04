@@ -7,6 +7,7 @@ package br.cesjf.bibliotecalpwsd.bean;
 
 import br.cesjf.bibliotecalpwsd.dao.AssuntoDAO;
 import br.cesjf.bibliotecalpwsd.model.Assunto;
+import br.cesjf.bibliotecalpwsd.util.Mensagem;
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -44,11 +45,11 @@ public class AssuntoFormBean implements Serializable {
 
     //Métodos dos botões 
     public void record(ActionEvent actionEvent) {
-        msgScreen(new AssuntoDAO().persistir(assunto));
+        Mensagem.msgScreen(new AssuntoDAO().persistir(assunto));
     }
     
     public void exclude(ActionEvent actionEvent) {
-        msgScreen(new AssuntoDAO().remover(assunto));
+        Mensagem.msgScreen(new AssuntoDAO().remover(assunto));
     }
 
     //getters and setters
@@ -75,13 +76,5 @@ public class AssuntoFormBean implements Serializable {
     public boolean isNew() {
         return assunto == null || assunto.getId() == null || assunto.getId() == 0;
     }
-    
-    public void msgScreen(String msg) {
-        if(msg.contains("Não")){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", msg));
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informação", msg));
-        }
-    }
-
+   
 }

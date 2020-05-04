@@ -15,6 +15,7 @@ import br.cesjf.bibliotecalpwsd.model.Exemplar;
 import br.cesjf.bibliotecalpwsd.model.Livro;
 import br.cesjf.bibliotecalpwsd.model.Reserva;
 import br.cesjf.bibliotecalpwsd.model.Usuario;
+import br.cesjf.bibliotecalpwsd.util.Mensagem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,11 +65,11 @@ public class EmprestimoFormBean implements Serializable {
     //Métodos dos botões 
     public void record(ActionEvent actionEvent) {
         emprestimo.calculaDevolucaoPrevista();
-        msgScreen(new EmprestimoDAO().persistir(emprestimo));
+        Mensagem.msgScreen(new EmprestimoDAO().persistir(emprestimo));
     }
     
     public void exclude(ActionEvent actionEvent) {
-        msgScreen(new EmprestimoDAO().remover(emprestimo));
+        Mensagem.msgScreen(new EmprestimoDAO().remover(emprestimo));
     }
 
     //getters and setters
@@ -137,13 +138,6 @@ public class EmprestimoFormBean implements Serializable {
         return emprestimo == null || emprestimo.getId() == null || emprestimo.getId() == 0;
     }
     
-    public void msgScreen(String msg) {
-        if(msg.contains("Não")){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", msg));
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informação", msg));
-        }
-    }
     
     private void usuariosPermitidos() {
         usuariosPermitidos = new ArrayList<>();
@@ -165,7 +159,7 @@ public class EmprestimoFormBean implements Serializable {
     public void verificaUsuario(SelectEvent event) {
         usuariosPermitidos();
         if(!usuariosPermitidos.contains(emprestimo.getIdUsuario())) {
-            msgScreen("Não permitido. Usuário com alguma pendência.");
+            Mensagem.msgScreen("Não permitido. Usuário com alguma pendência.");
         }
     }
     

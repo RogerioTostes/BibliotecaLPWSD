@@ -7,6 +7,7 @@ package br.cesjf.bibliotecalpwsd.bean;
 
 import br.cesjf.bibliotecalpwsd.dao.AutorDAO;
 import br.cesjf.bibliotecalpwsd.model.Autor;
+import br.cesjf.bibliotecalpwsd.util.Mensagem;
 import br.cesjf.bibliotecalpwsd.util.ProcessReport;
 import com.github.adminfaces.template.exception.BusinessException;
 import java.io.Serializable;
@@ -40,13 +41,13 @@ public class AutorListBean extends ProcessReport implements Serializable {
 
     //Métodos dos botões 
     public void record(ActionEvent actionEvent) {
-        msgScreen(new AutorDAO().persistir(autor));
+        Mensagem.msgScreen(new AutorDAO().persistir(autor));
         autores = new AutorDAO().buscarTodas();
     }
 
     public void exclude(ActionEvent actionEvent) {
         for (Object a: autoresSelecionados){
-            msgScreen(new AutorDAO().remover((Autor) a));
+            Mensagem.msgScreen(new AutorDAO().remover((Autor) a));
         }
         autores = new AutorDAO().buscarTodas();
     }
@@ -103,12 +104,6 @@ public class AutorListBean extends ProcessReport implements Serializable {
         this.id = id;
     }
     
-    public void msgScreen(String msg) {
-        if(msg.contains("Não")){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", msg));
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informação", msg));
-        }
-    }
+   
     
 }

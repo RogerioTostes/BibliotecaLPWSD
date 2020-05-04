@@ -7,6 +7,7 @@ package br.cesjf.bibliotecalpwsd.bean;
 
 import br.cesjf.bibliotecalpwsd.dao.EditoraDAO;
 import br.cesjf.bibliotecalpwsd.model.Editora;
+import br.cesjf.bibliotecalpwsd.util.Mensagem;
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -44,11 +45,11 @@ public class EditoraFormBean implements Serializable {
 
     //Métodos dos botões 
     public void record(ActionEvent actionEvent) {
-        msgScreen(new EditoraDAO().persistir(editora));
+        Mensagem.msgScreen(new EditoraDAO().persistir(editora));
     }
     
     public void exclude(ActionEvent actionEvent) {
-        msgScreen(new EditoraDAO().remover(editora));
+        Mensagem.msgScreen(new EditoraDAO().remover(editora));
     }
 
     //getters and setters
@@ -76,12 +77,5 @@ public class EditoraFormBean implements Serializable {
         return editora == null || editora.getId() == null || editora.getId() == 0;
     }
     
-    public void msgScreen(String msg) {
-        if(msg.contains("Não")){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", msg));
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informação", msg));
-        }
-    }
-
+    
 }

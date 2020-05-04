@@ -7,6 +7,7 @@ package br.cesjf.bibliotecalpwsd.bean;
 
 import br.cesjf.bibliotecalpwsd.dao.EditoraDAO;
 import br.cesjf.bibliotecalpwsd.model.Editora;
+import br.cesjf.bibliotecalpwsd.util.Mensagem;
 import br.cesjf.bibliotecalpwsd.util.ProcessReport;
 import com.github.adminfaces.template.exception.BusinessException;
 import java.io.Serializable;
@@ -40,13 +41,13 @@ public class EditoraListBean extends ProcessReport implements Serializable {
 
     //Métodos dos botões 
     public void record(ActionEvent actionEvent) {
-        msgScreen(new EditoraDAO().persistir(editora));
+        Mensagem.msgScreen(new EditoraDAO().persistir(editora));
         editoras = new EditoraDAO().buscarTodas();
     }
 
     public void exclude(ActionEvent actionEvent) {
         for (Object a: editorasSelecionados){
-            msgScreen(new EditoraDAO().remover((Editora) a));
+            Mensagem.msgScreen(new EditoraDAO().remover((Editora) a));
         }
         editoras = new EditoraDAO().buscarTodas();
     }
@@ -103,12 +104,6 @@ public class EditoraListBean extends ProcessReport implements Serializable {
         this.id = id;
     }
     
-    public void msgScreen(String msg) {
-        if(msg.contains("Não")){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", msg));
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informação", msg));
-        }
-    }
+   
     
 }
