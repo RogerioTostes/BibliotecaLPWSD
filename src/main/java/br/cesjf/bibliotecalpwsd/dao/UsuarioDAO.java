@@ -6,6 +6,7 @@
 package br.cesjf.bibliotecalpwsd.dao;
 
 import br.cesjf.bibliotecalpwsd.model.Usuario;
+import br.cesjf.bibliotecalpwsd.util.Criptografia;
 import br.cesjf.bibliotecalpwsd.util.PersistenceUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -115,6 +116,7 @@ public class UsuarioDAO implements Serializable {
         try {
             EntityManager em = PersistenceUtil.getEntityManager();
             em.getTransaction().begin();
+            usuario.setSenha(Criptografia.criptografiaSenha(usuario.getSenha()));
             usuario = em.merge(usuario);
             em.getTransaction().commit();
             Logger.getLogger (PersistenceUtil.class.getName()).log(Level.INFO, "Usuario salvo com sucesso!");

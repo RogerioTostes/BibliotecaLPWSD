@@ -6,11 +6,14 @@
 package br.cesjf.bibliotecalpwsd.dao;
 
 import br.cesjf.bibliotecalpwsd.model.Usuario;
+import br.cesjf.bibliotecalpwsd.util.Criptografia;
 import br.cesjf.bibliotecalpwsd.util.PersistenceUtil;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,11 +32,11 @@ public class LoginDAO implements Serializable{
         return loginDAO;
     }
     
-    public static Boolean login(String usuario, String senha) {
+    public static Boolean login(String usuario, String senha) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("SELECT u FROM Usuario u WHERE u.usuario = :usuario AND u.senha = :senha");
         query.setParameter("usuario", usuario);
-        query.setParameter("senha", senha);
+           query.setParameter("senha",Criptografia.criptografiaSenha(senha));
         List<Usuario> usuarios = query.getResultList();
         if (usuarios != null && usuarios.size() > 0) {
             Logger.getLogger (PersistenceUtil.class.getName()).log(Level.INFO, "Login efetuado com sucesso!");
