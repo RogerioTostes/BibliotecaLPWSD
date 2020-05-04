@@ -16,6 +16,7 @@ import javax.faces.event.ActionEvent;
 import org.omnifaces.cdi.ViewScoped;
 import javax.inject.Named;
 import org.omnifaces.util.Faces;
+import br.cesjf.bibliotecalpwsd.util.EUsuario;
 
 /**
  *
@@ -34,11 +35,11 @@ public class UsuarioFormBean implements Serializable {
     public UsuarioFormBean() {
         //1 - Aluno, 2 - Professor, 3 - Funcionário, 4 - Bibliotecário e 5 - Administrador
         tipos = new HashMap<String, String>();
-        tipos.put("Aluno", "1");
-        tipos.put("Professor", "2");
-        tipos.put("Funcionário", "3");
-        tipos.put("Bibliotecário", "4");
-        tipos.put("Administrador", "5");
+        tipos.put(EUsuario.Aluno.toString(), "1");
+        tipos.put("Professor", "2");tipos.put(EUsuario.Professor.toString(), "2");
+        tipos.put("Funcionário", "3");tipos.put(EUsuario.Funcionário.toString(), "3");
+        tipos.put("Bibliotecário", "4");tipos.put(EUsuario.Bibliotecário.toString(), "4");
+        tipos.put("Administrador", "5");tipos.put(EUsuario.Administrador.toString(), "5");
     }
     
     public void init() {
